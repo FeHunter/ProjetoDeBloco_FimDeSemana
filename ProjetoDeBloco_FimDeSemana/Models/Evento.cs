@@ -19,6 +19,7 @@ namespace ProjetoDeBloco_FimDeSemana.Models
         public Usuario Usuario { get; set; }
 
         public Cardapio Cardapio { get; set; }
+        public ICollection<CardapioPersonalizado> CardapiosPersonalizados { get; set; }
 
         public void DetalhesDoEvento() {
         }

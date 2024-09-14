@@ -34,6 +34,11 @@ namespace ProjetoDeBloco_FimDeSemana.Data
                 .WithMany(c => c.ItensDoCardapio)
                 .HasForeignKey(i => i.CardapioId);
 
+            // Relacionamento entre Evento e CardapioPersonalizado (Um evento pode ter vários cardápios personalizados)
+            modelBuilder.Entity<CardapioPersonalizado>()
+                .HasOne(cp => cp.Evento)
+                .WithMany(e => e.CardapiosPersonalizados)
+                .HasForeignKey(cp => cp.EventoId);
         }
     }
 }
