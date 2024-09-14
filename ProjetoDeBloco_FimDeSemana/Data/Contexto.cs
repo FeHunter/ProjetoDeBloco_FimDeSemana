@@ -21,6 +21,14 @@ namespace ProjetoDeBloco_FimDeSemana.Data
                 .HasOne(e => e.Usuario)
                 .WithMany(u => u.Eventos)
                 .HasForeignKey(e => e.UsuarioId);
+
+            // Relacionamento entre Evento e Cardapio (Um evento tem um cardápio)
+            modelBuilder.Entity<Cardapio>()
+                .HasOne(c => c.Evento)
+                .WithOne(e => e.Cardapio)
+                .HasForeignKey<Cardapio>(c => c.EventoId);
+
+
         }
     }
 }
