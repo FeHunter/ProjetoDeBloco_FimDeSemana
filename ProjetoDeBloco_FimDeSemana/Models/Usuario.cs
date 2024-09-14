@@ -1,6 +1,7 @@
 namespace ProjetoDeBloco_FimDeSemana.Models
 {
-    public class Usuario {
+    public class Usuario
+    {
         public int Id { get; set; }
         public string NomeCompleto { get; set; }
         public string NomeDeUsuario { get; set; }
@@ -9,11 +10,12 @@ namespace ProjetoDeBloco_FimDeSemana.Models
         public string Telefone { get; set; }
         public DateTime DataDeNascimento { get; set; }
         public string Genero { get; set; }
-        public List<Post> MyPost { get; set; }
-         public Pagamento Pagamento { get; set; }
-         public List<Evento> Eventos { get; set; }
-    
-        public void PublicarPost (){}
-        public void PublicarAvaliacao (){}
+        public Pagamentos Pagamento { get; set; }
+        public List<Evento> Eventos { get; set; }
+
+        public void PublicarAvaliacao()
+        {
+            // Implementação do método
+        }
     }
 }

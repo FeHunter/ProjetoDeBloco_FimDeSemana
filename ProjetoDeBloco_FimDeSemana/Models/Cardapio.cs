@@ -2,7 +2,7 @@ using System;
 
 namespace ProjetoDeBloco_FimDeSemana.Models
 {
-    class Cardapio {
+    public class Cardapio {
         public List<ItemCardapio> ItensDoCardapio { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace ProjetoDeBloco_FimDeSemana.Models
 {
-    class GerenciaReserva {
+    public class GerenciaReserva {
         private int idDoUsuario;
         public List<Evento> Eventos { get; set; }
 
