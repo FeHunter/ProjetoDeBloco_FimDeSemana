@@ -9,9 +9,9 @@ namespace ProjetoDeBloco_FimDeSemana.Models
         public string Telefone { get; set; }
         public DateTime DataDeNascimento { get; set; }
         public string Genero { get; set; }
-        // public List<Post> MyPost { get; set; } // Comentado até criar classe Post
-        // public Pagamento Pagamento { get; set; } // Comentado até criar classe Pagamento
-        // public List<Evento> Eventos { get; set; } // Comentado até cirar classe Eventos
+        public List<Post> MyPost { get; set; }
+         public Pagamento Pagamento { get; set; }
+         public List<Evento> Eventos { get; set; }
     
         public void PublicarPost (){}
         public void PublicarAvaliacao (){}
