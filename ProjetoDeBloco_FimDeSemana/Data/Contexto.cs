@@ -5,7 +5,6 @@ namespace ProjetoDeBloco_FimDeSemana.Data
 {
     public class Contexto : DbContext
     {
-        public Contexto(DbContextOptions<Contexto> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Evento> Eventos { get; set; }
@@ -13,6 +12,9 @@ namespace ProjetoDeBloco_FimDeSemana.Data
         public DbSet<CardapioPersonalizado> CardapiosPersonalizados { get; set; }
         public DbSet<ItemCardapio> ItensDoCardapio { get; set; }
         public DbSet<GerenciaReserva> Reservas { get; set; }
+
+        public Contexto(DbContextOptions<Contexto> options) : base(options) { }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +41,8 @@ namespace ProjetoDeBloco_FimDeSemana.Data
                 .HasOne(cp => cp.Evento)
                 .WithMany(e => e.CardapiosPersonalizados)
                 .HasForeignKey(cp => cp.EventoId);
+            
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
