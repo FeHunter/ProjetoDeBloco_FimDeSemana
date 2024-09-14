@@ -24,11 +24,12 @@ namespace ProjetoDeBloco_FimDeSemana.Data
                 .WithMany(u => u.Eventos)
                 .HasForeignKey(e => e.UsuarioId);
 
-            // Relacionamento entre Evento e Cardapio (Um evento tem um cardápio)
+            // Relacionamento entre Evento e Cardapio (Um evento tem um cardápio opcional)
             modelBuilder.Entity<Cardapio>()
                 .HasOne(c => c.Evento)
                 .WithOne(e => e.Cardapio)
-                .HasForeignKey<Cardapio>(c => c.EventoId);
+                .HasForeignKey<Cardapio>(c => c.EventoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Relacionamento entre Cardapio e ItemDoCardapio (Um cardápio tem muitos itens)
             modelBuilder.Entity<ItemCardapio>()
@@ -41,7 +42,7 @@ namespace ProjetoDeBloco_FimDeSemana.Data
                 .HasOne(cp => cp.Evento)
                 .WithMany(e => e.CardapiosPersonalizados)
                 .HasForeignKey(cp => cp.EventoId);
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }

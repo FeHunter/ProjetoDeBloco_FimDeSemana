@@ -5,7 +5,7 @@ namespace ProjetoDeBloco_FimDeSemana.Models
 {
     public class Evento
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public string Endereco { get; set; }
@@ -15,11 +15,11 @@ namespace ProjetoDeBloco_FimDeSemana.Models
         public GerenciaReserva GerenciaReserva { get; set; }
 
         [ForeignKey("UsuarioId")]
-        public int UsuarioId { get; set; } 
+        public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
 
         public Cardapio Cardapio { get; set; }
-        public ICollection<CardapioPersonalizado> CardapiosPersonalizados { get; set; }
+        public List<CardapioPersonalizado> CardapiosPersonalizados { get; set; } = new List<CardapioPersonalizado>();
 
         public void DetalhesDoEvento() {
         }
