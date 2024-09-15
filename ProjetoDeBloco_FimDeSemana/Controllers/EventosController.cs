@@ -50,7 +50,7 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         public IActionResult Create()
         {
             ViewData["GerenciaReservaId"] = new SelectList(_context.Reservas, "Id", "Id");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "NomeCompleto");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GerenciaReservaId"] = new SelectList(_context.Reservas, "Id", "Id", evento.GerenciaReservaId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id", evento.UsuarioId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "NomeCompleto", evento.UsuarioId);
             return View(evento);
         }
 
@@ -86,7 +86,8 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
                 return NotFound();
             }
             ViewData["GerenciaReservaId"] = new SelectList(_context.Reservas, "Id", "Id", evento.GerenciaReservaId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Id", evento.UsuarioId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "NomeCompleto", evento.UsuarioId);
+
             return View(evento);
         }
 
