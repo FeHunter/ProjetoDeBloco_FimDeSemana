@@ -85,12 +85,26 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
                 return NotFound();
             }
 
-            var itemCardapio = await _context.ItensDoCardapio.FindAsync(id);
+            var itemCardapio = await _context.ItensDoCardapio
+                .Include(i => i.Cardapio) 
+                .ThenInclude(c => c.Evento) 
+                .FirstOrDefaultAsync(i => i.Id == id);
             if (itemCardapio == null)
             {
                 return NotFound();
             }
-            ViewData["CardapioId"] = new SelectList(_context.Cardapios, "Id", "Id", itemCardapio.CardapioId);
+
+            // Cria a lista de Cardapios com o nome do Evento
+            var cardapios = await _context.Cardapios
+                .Include(c => c.Evento) 
+                .Select(c => new {
+                    c.Id,
+                    NomeEvento = c.Evento.Titulo 
+                })
+                .ToListAsync();
+
+            ViewData["CardapioId"] = new SelectList(cardapios, "Id", "NomeEvento", itemCardapio.CardapioId);
+
             return View(itemCardapio);
         }
 

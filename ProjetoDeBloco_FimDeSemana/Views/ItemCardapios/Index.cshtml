@@ -12,25 +12,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cardapio.Evento.Titulo) 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cardapio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorTotal)
-            </th>
-            
+            <th> Evento </th>
+            <th> Nome do Item </th>
+            <th> Quantidade </th>
+            <th> Preço </th>
             <th></th>
         </tr>
     </thead>
@@ -49,10 +34,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Preco)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorTotal)
-            </td>
-           
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
