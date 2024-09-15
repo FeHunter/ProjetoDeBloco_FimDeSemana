@@ -91,12 +91,14 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         name: "FK_Eventos_Reservas_GerenciaReservaId",
                         column: x => x.GerenciaReservaId,
                         principalTable: "Reservas",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Eventos_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,7 +107,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EventoId = table.Column<int>(type: "INTEGER", nullable: true)
+                    EventoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,7 +117,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         column: x => x.EventoId,
                         principalTable: "Eventos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

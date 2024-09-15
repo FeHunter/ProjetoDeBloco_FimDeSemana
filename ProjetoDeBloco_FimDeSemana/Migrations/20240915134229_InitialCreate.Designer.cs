@@ -11,7 +11,7 @@ using ProjetoDeBloco_FimDeSemana.Data;
 namespace ProjetoDeBloco_FimDeSemana.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240915131853_InitialCreate")]
+    [Migration("20240915134229_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("EventoId")
+                    b.Property<int>("EventoId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -216,7 +216,8 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                     b.HasOne("ProjetoDeBloco_FimDeSemana.Models.Evento", "Evento")
                         .WithOne("Cardapio")
                         .HasForeignKey("ProjetoDeBloco_FimDeSemana.Models.Cardapio", "EventoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Evento");
                 });
@@ -244,11 +245,13 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 {
                     b.HasOne("ProjetoDeBloco_FimDeSemana.Models.GerenciaReserva", "GerenciaReserva")
                         .WithMany("Eventos")
-                        .HasForeignKey("GerenciaReservaId");
+                        .HasForeignKey("GerenciaReservaId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("ProjetoDeBloco_FimDeSemana.Models.Usuario", "Usuario")
                         .WithMany("Eventos")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("GerenciaReserva");
 
@@ -293,8 +296,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
 
             modelBuilder.Entity("ProjetoDeBloco_FimDeSemana.Models.Evento", b =>
                 {
-                    b.Navigation("Cardapio")
-                        .IsRequired();
+                    b.Navigation("Cardapio");
 
                     b.Navigation("CardapiosPersonalizados");
                 });

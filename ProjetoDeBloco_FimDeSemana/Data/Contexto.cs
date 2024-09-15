@@ -20,32 +20,36 @@ namespace ProjetoDeBloco_FimDeSemana.Data
             modelBuilder.Entity<Evento>()
                 .HasOne(e => e.Usuario)
                 .WithMany(u => u.Eventos)
-                .HasForeignKey(e => e.UsuarioId);
+                .HasForeignKey(e => e.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Relacionamento entre Evento e Cardapio (Um evento tem um cardápio opcional)
-            modelBuilder.Entity<Cardapio>()
-                .HasOne(c => c.Evento)
-                .WithOne(e => e.Cardapio)
+            // Relacionamento um-para-um entre Evento e Cardapio
+            modelBuilder.Entity<Evento>()
+                .HasOne(e => e.Cardapio)
+                .WithOne(c => c.Evento)
                 .HasForeignKey<Cardapio>(c => c.EventoId)
-                .OnDelete(DeleteBehavior.Restrict); // Evita remoção em cascata
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Relacionamento entre Cardapio e ItemCardapio (Um cardápio tem muitos itens)
             modelBuilder.Entity<ItemCardapio>()
                 .HasOne(i => i.Cardapio)
                 .WithMany(c => c.ItensDoCardapio)
-                .HasForeignKey(i => i.CardapioId);
+                .HasForeignKey(i => i.CardapioId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Relacionamento entre Evento e CardapioPersonalizado (Um evento pode ter vários cardápios personalizados)
             modelBuilder.Entity<CardapioPersonalizado>()
                 .HasOne(cp => cp.Evento)
                 .WithMany(e => e.CardapiosPersonalizados)
-                .HasForeignKey(cp => cp.EventoId);
+                .HasForeignKey(cp => cp.EventoId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Relacionamento entre GerenciaReserva e Evento (Uma reserva pode ter vários eventos)
             modelBuilder.Entity<Evento>()
                 .HasOne(e => e.GerenciaReserva)
                 .WithMany(gr => gr.Eventos)
-                .HasForeignKey(e => e.GerenciaReservaId);
+                .HasForeignKey(e => e.GerenciaReservaId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             base.OnModelCreating(modelBuilder);
         }
