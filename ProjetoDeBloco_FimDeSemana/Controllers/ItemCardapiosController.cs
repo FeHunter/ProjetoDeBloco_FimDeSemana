@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,7 +20,9 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         // GET: ItemCardapios
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.ItensDoCardapio.Include(i => i.Cardapio);
+            var contexto = _context.ItensDoCardapio
+                .Include(i => i.Cardapio) 
+                .ThenInclude(c => c.Evento); 
             return View(await contexto.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
 
             var itemCardapio = await _context.ItensDoCardapio
                 .Include(i => i.Cardapio)
+                .ThenInclude(c => c.Evento) 
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (itemCardapio == null)
             {
@@ -48,13 +49,20 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         // GET: ItemCardapios/Create
         public IActionResult Create()
         {
-            ViewData["CardapioId"] = new SelectList(_context.Cardapios, "Id", "Id");
+            ViewData["CardapioId"] = new SelectList(
+                _context.Cardapios
+                .Include(c => c.Evento)
+                .Select(c => new {
+                    Id = c.Id,
+                    NomeEvento = c.Evento.Titulo 
+                }),
+                "Id",
+                "NomeEvento"
+            );
             return View();
         }
 
         // POST: ItemCardapios/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CardapioId,Nome,Quantidade,Preco,ValorTotal")] ItemCardapio itemCardapio)
@@ -87,8 +95,6 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         }
 
         // POST: ItemCardapios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CardapioId,Nome,Quantidade,Preco,ValorTotal")] ItemCardapio itemCardapio)
@@ -132,6 +138,7 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
 
             var itemCardapio = await _context.ItensDoCardapio
                 .Include(i => i.Cardapio)
+                .ThenInclude(c => c.Evento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (itemCardapio == null)
             {

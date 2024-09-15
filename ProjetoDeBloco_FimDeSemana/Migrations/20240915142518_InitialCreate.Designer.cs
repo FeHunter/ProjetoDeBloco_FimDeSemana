@@ -11,7 +11,7 @@ using ProjetoDeBloco_FimDeSemana.Data;
 namespace ProjetoDeBloco_FimDeSemana.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240915134229_InitialCreate")]
+    [Migration("20240915142518_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
