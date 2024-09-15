@@ -48,7 +48,14 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         // GET: Cardapios/Create
         public IActionResult Create()
         {
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "Id", "Id");
+            ViewData["EventoId"] = new SelectList(
+                _context.Eventos.Select(e => new {
+                    Id = e.Id,
+                    Nome = e.Titulo
+                }),
+                "Id",
+                "Nome"
+            );
             return View();
         }
 
@@ -61,13 +68,34 @@ namespace ProjetoDeBloco_FimDeSemana.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cardapio);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Verifica se já existe um Cardapio com o mesmo EventoId
+                var existente = await _context.Cardapios
+                    .AnyAsync(c => c.EventoId == cardapio.EventoId);
+
+                if (existente)
+                {
+                    // Adiciona um erro ao ModelState e retorna à view
+                    ModelState.AddModelError("EventoId", "Já existe um cardápio para este evento.");
+                }
+                else
+                {
+                    _context.Add(cardapio);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "Id", "Id", cardapio.EventoId);
+            ViewData["EventoId"] = new SelectList(
+                _context.Eventos.Select(e => new {
+                    Id = e.Id,
+                    Nome = e.Titulo
+                }),
+                "Id",
+                "Nome",
+                cardapio.EventoId
+            );
             return View(cardapio);
         }
+
 
         // GET: Cardapios/Edit/5
         public async Task<IActionResult> Edit(int? id)
