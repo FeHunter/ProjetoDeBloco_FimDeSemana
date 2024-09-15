@@ -75,7 +75,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("GerenciaReservaId")
+                    b.Property<int?>("GerenciaReservaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("HorarioDeFuncionamento")
@@ -86,7 +86,7 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("ValorTotal")
@@ -107,10 +107,12 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Reservas");
                 });
@@ -239,17 +241,22 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 {
                     b.HasOne("ProjetoDeBloco_FimDeSemana.Models.GerenciaReserva", "GerenciaReserva")
                         .WithMany("Eventos")
-                        .HasForeignKey("GerenciaReservaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GerenciaReservaId");
 
                     b.HasOne("ProjetoDeBloco_FimDeSemana.Models.Usuario", "Usuario")
                         .WithMany("Eventos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("GerenciaReserva");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ProjetoDeBloco_FimDeSemana.Models.GerenciaReserva", b =>
+                {
+                    b.HasOne("ProjetoDeBloco_FimDeSemana.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Usuario");
                 });

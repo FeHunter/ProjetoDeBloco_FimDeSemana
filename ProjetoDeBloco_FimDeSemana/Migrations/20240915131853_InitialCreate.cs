@@ -26,19 +26,6 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
@@ -65,6 +52,24 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reservas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reservas_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Eventos",
                 columns: table => new
                 {
@@ -76,8 +81,8 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                     DataDoEvento = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ValorTotal = table.Column<double>(type: "REAL", nullable: false),
                     HorarioDeFuncionamento = table.Column<string>(type: "TEXT", nullable: false),
-                    GerenciaReservaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
+                    GerenciaReservaId = table.Column<int>(type: "INTEGER", nullable: true),
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,14 +91,12 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                         name: "FK_Eventos_Reservas_GerenciaReservaId",
                         column: x => x.GerenciaReservaId,
                         principalTable: "Reservas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Eventos_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -195,6 +198,11 @@ namespace ProjetoDeBloco_FimDeSemana.Migrations
                 name: "IX_ItensDoCardapio_CardapioId",
                 table: "ItensDoCardapio",
                 column: "CardapioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservas_UsuarioId",
+                table: "Reservas",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_PagamentoId",
