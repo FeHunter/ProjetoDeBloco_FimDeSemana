@@ -1,12 +1,11 @@
 ﻿@model ProjetoDeBloco_FimDeSemana.Models.Evento
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Cadastrar Evento";
 }
 
-<h1>Create</h1>
+<h1>Cadastrar Evento</h1>
 
-<h4>Evento</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -43,14 +42,6 @@
                 <span asp-validation-for="HorarioDeFuncionamento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GerenciaReservaId" class="control-label"></label>
-                <select asp-for="GerenciaReservaId" class ="form-control" asp-items="ViewBag.GerenciaReservaId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class ="form-control" asp-items="ViewBag.UsuarioId"></select>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -58,7 +49,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {
