@@ -17,16 +17,18 @@ namespace ProjetoDeBloco_FimDeSemana.Models
         // Relacionamento com GerenciaReserva (Um GerenciaReserva pode ter vários eventos)
         [ForeignKey("GerenciaReservaId")]
         public int? GerenciaReservaId { get; set; }
-        public GerenciaReserva GerenciaReserva { get; set; }
+        public GerenciaReserva? GerenciaReserva { get; set; }
 
         // Relacionamento com Usuario (Um Usuario pode criar muitos eventos)
         [ForeignKey("UsuarioId")]
         public int? UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
 
-        public Cardapio Cardapio { get; set; }
+        // Relacionamento com Cardapio (Um Evento pode ter um Cardapio)
+        [ForeignKey("CardapioId")]
+        public Cardapio? Cardapio { get; set; }
 
-        public List<CardapioPersonalizado> CardapiosPersonalizados { get; set; } = new List<CardapioPersonalizado>();
+        public CardapioPersonalizado? CardapiosPersonalizados { get; set; }
 
         public void DetalhesDoEvento()
         {
